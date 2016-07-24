@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Movies</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="pref_sort_title">Sort by</string>
+    <string name="pref_sort_key">sort</string>
+    <string name="pref_sort_default">Most Popular</string>
+    <string name="pref_sort_label_mpop">Most Popular</string>
+    <string name="pref_sort_label_hrate">Highest-Rated</string>
+    <string name="pref_sort_mpop">mpop</string>
+    <string name="pref_sort_hrate">hrate</string>
+    <string name="action_settings">Settings</string>
+
+
+</resources>
+
