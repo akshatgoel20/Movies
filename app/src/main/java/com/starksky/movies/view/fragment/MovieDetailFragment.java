@@ -4,11 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.starksky.movies.R;
+import com.starksky.movies.common.AppUrl;
+import com.starksky.movies.model.ArrayMovieDetails;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,14 +25,12 @@ import com.starksky.movies.R;
  * create an instance of this fragment.
  */
 public class MovieDetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ImageView movie_detail_image;
+    TextView movie_detail_title, movie_detail_reldate, movie_detail_rating, movie_detail_synopsis;
+    int position;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,8 +60,8 @@ public class MovieDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            Bundle bundle = getArguments();
+            position = bundle.getInt("position");
         }
     }
 
@@ -65,7 +69,26 @@ public class MovieDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+        movie_detail_image = (ImageView) rootView.findViewById(R.id.detail_movie_poster);
+        movie_detail_title = (TextView) rootView.findViewById(R.id.detail_movie_title);
+        movie_detail_reldate = (TextView) rootView.findViewById(R.id.detail_movie_reldate);
+        movie_detail_rating = (TextView) rootView.findViewById(R.id.detail_movie_rating);
+        movie_detail_synopsis = (TextView)rootView.findViewById(R.id.movie_detail_synopsis);
+        loadContent();
+        return rootView;
+    }
+
+    private void loadContent(){
+        String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(position).getPoster_path());
+        Picasso.with(getActivity())
+                .load(url)
+                .into(movie_detail_image);
+        movie_detail_title.setText(ArrayMovieDetails.getArrayList().get(position).getTitle());
+        movie_detail_reldate.setText(ArrayMovieDetails.getArrayList().get(position).getRelease_date());
+        movie_detail_rating.setText(ArrayMovieDetails.getArrayList().get(position).getUser_rating());
+        movie_detail_synopsis.setText(ArrayMovieDetails.getArrayList().get(position).getSynopsis());
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -75,7 +98,7 @@ public class MovieDetailFragment extends Fragment {
         }
     }
 
-    @Override
+   /* @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -84,7 +107,7 @@ public class MovieDetailFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }*/
 
     @Override
     public void onDetach() {

@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.starksky.movies.R;
@@ -18,6 +21,7 @@ import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.activity.SettingsActivity;
 
 public class GridPosterFragment extends Fragment {
+
 
     public GridPosterFragment() {
         // Required empty public constructor
@@ -37,21 +41,32 @@ public class GridPosterFragment extends Fragment {
         GridView gridView = (GridView) rootview.findViewById(R.id.postergrid);
         new FetchPopularMovie().execute();
         gridView.setAdapter(new GridPosterAdapter(getActivity()));
-
-
-
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", i);
+                // movieDetailPosition.setPosition(i);
+                Fragment fragment = new MovieDetailFragment();
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.commit();
+            }
+        });
         return rootview;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.gridposter_menu,menu);
+        inflater.inflate(R.menu.gridposter_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             Intent intent = new Intent(getActivity(), SettingsActivity.class);
             startActivity(intent);
         }

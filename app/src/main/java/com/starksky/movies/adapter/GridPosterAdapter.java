@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.starksky.movies.R;
+import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 
 /**
@@ -18,7 +19,7 @@ public class GridPosterAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
     Context mContext;
     ImageView imageView;
-    private final String BASE_URL_IMAGE = "http://image.tmdb.org/t/p/w185/";
+
 
 
     public GridPosterAdapter(Context context) {
@@ -48,7 +49,7 @@ public class GridPosterAdapter extends BaseAdapter {
         cellview = inflater.inflate(R.layout.grid_image, null);
         imageView = (ImageView) cellview.findViewById(R.id.gridimage);
         //imageView.setImageResource(R.mipmap.ic_launcher);
-        String url = BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(i).getPoster_path());
+        String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(i).getPoster_path());
         Picasso.with(mContext)
                 .load(url)
                 .into(imageView);
