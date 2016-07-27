@@ -1,14 +1,21 @@
 package com.starksky.movies.utils;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 import com.starksky.movies.BuildConfig;
+import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 import com.starksky.movies.model.MovieDetailsModel;
+import com.starksky.movies.view.fragment.GridPosterFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,22 +29,31 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by akshat on 23/07/16.
  */
-public class FetchPopularMovie extends AsyncTask<String, Void, Void> {
+public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
 
+    Context context;
 
     @Override
-    protected Void doInBackground(String... objects) {
+    protected Void doInBackground(Context... objects) {
+        context = objects[0];
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String format = "json";
         String movieJsonString = null;
+          String MOVIE_BASE_URL ="";
+
         try {
-            final String MOVIE_BASE_URL = "https://api.themoviedb.org/3/movie/popular?";
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            String movieSharedPref = sharedPreferences.getString("sort","mpop");
+            if(movieSharedPref.equals("mpop")){
+                  MOVIE_BASE_URL = AppUrl.BASE_URL_POPULAR;
+            }else if(movieSharedPref.equals("hrate")){
+                MOVIE_BASE_URL=AppUrl.BASE_URL_TOPRATED;
+            }
             final String API_KEY_PARAM = "api_key";
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
                     .appendQueryParameter(API_KEY_PARAM, BuildConfig.MOVIE_API_KEY)
@@ -70,6 +86,7 @@ public class FetchPopularMovie extends AsyncTask<String, Void, Void> {
             }
             movieJsonString = buffer.toString();
             getMoviewDataFromJson(movieJsonString);
+            loadImages();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -85,9 +102,27 @@ public class FetchPopularMovie extends AsyncTask<String, Void, Void> {
             }
         }
 
-       return null;
+        return null;
     }
 
+
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+       CommonUtils.stopDialog();
+       GridPosterFragment.updateGridView();
+
+    }
+
+    private void loadImages() {
+        for (int i = 0; i < ArrayMovieDetails.getArrayList().size(); i++) {
+            String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(i).getPoster_path());
+            Picasso.with(context)
+                    .load(url);
+
+        }
+    }
 
     private String[] getMoviewDataFromJson(String str) throws JSONException {
         final String OWM_RESULT = "results";
@@ -101,10 +136,10 @@ public class FetchPopularMovie extends AsyncTask<String, Void, Void> {
         }.getType();
 
         list = new GsonBuilder().create().fromJson(String.valueOf(jsonArray), listType);
-        Log.d("hello",list.get(0).getPoster_path());
+        Log.d("hello", list.get(0).getPoster_path());
         new ArrayMovieDetails().setArrayList(list);
 
-        return null ;
+        return null;
 
     }
 }

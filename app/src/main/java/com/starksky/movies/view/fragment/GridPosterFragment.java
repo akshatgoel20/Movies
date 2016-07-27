@@ -17,12 +17,15 @@ import android.widget.GridView;
 
 import com.starksky.movies.R;
 import com.starksky.movies.adapter.GridPosterAdapter;
+import com.starksky.movies.utils.CommonUtils;
 import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.activity.SettingsActivity;
 
 public class GridPosterFragment extends Fragment {
 
-
+private static final String TAG = GridPosterFragment.class.getSimpleName();
+   static GridView gridView ;
+  static  GridPosterAdapter gridPosterAdapter ;
     public GridPosterFragment() {
         // Required empty public constructor
     }
@@ -30,6 +33,7 @@ public class GridPosterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
     }
 
@@ -38,9 +42,10 @@ public class GridPosterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_grid_poster, container, false);
-        GridView gridView = (GridView) rootview.findViewById(R.id.postergrid);
-        new FetchPopularMovie().execute();
-        gridView.setAdapter(new GridPosterAdapter(getActivity()));
+         gridView = (GridView) rootview.findViewById(R.id.postergrid);
+        gridPosterAdapter = new GridPosterAdapter(getActivity());
+        gridView.setAdapter(gridPosterAdapter);
+        gridPosterAdapter.notifyDataSetChanged();
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -51,10 +56,11 @@ public class GridPosterFragment extends Fragment {
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
                 fragmentTransaction.commit();
             }
         });
+
         return rootview;
     }
 
@@ -72,4 +78,26 @@ public class GridPosterFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+if(CommonUtils.isNetworkAvailable(getActivity())){
+    updateInfo();
+}else{
+    CommonUtils.toast(getActivity(),"Please connect to internet");
+    return;
+}
+
+
+    }
+
+    void updateInfo() {
+        CommonUtils.showDialog(getActivity(), "Loading...");
+        new FetchPopularMovie().execute(getActivity());
+    }
+
+static  public void updateGridView(){
+     gridView.setAdapter(gridPosterAdapter);
+ }
 }
