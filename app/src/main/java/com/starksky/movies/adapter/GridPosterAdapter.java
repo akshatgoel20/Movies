@@ -52,6 +52,8 @@ public class GridPosterAdapter extends BaseAdapter {
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(i).getPoster_path());
         Picasso.with(mContext)
                 .load(url)
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.image_placeholder)
                 .into(imageView);
         return cellview;
 

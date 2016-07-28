@@ -16,6 +16,9 @@ import com.starksky.movies.R;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -28,9 +31,12 @@ public class MovieDetailFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    ImageView movie_detail_image;
-    TextView movie_detail_title, movie_detail_reldate, movie_detail_rating, movie_detail_synopsis;
     int position;
+    @BindView(R.id.detail_movie_poster) ImageView movie_detail_image;
+    @BindView(R.id.detail_movie_title) TextView movie_detail_title;
+    @BindView(R.id.detail_movie_rating) TextView movie_detail_rating;
+    @BindView(R.id.detail_movie_reldate) TextView movie_detail_reldate;
+    @BindView(R.id.movie_detail_synopsis) TextView movie_detail_synopsis;
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,11 +76,7 @@ public class MovieDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
-        movie_detail_image = (ImageView) rootView.findViewById(R.id.detail_movie_poster);
-        movie_detail_title = (TextView) rootView.findViewById(R.id.detail_movie_title);
-        movie_detail_reldate = (TextView) rootView.findViewById(R.id.detail_movie_reldate);
-        movie_detail_rating = (TextView) rootView.findViewById(R.id.detail_movie_rating);
-        movie_detail_synopsis = (TextView)rootView.findViewById(R.id.movie_detail_synopsis);
+        ButterKnife.bind(this, rootView);
         loadContent();
         return rootView;
     }
