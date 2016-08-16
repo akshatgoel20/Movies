@@ -54,9 +54,9 @@ public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
             }else if(movieSharedPref.equals("hrate")){
                 MOVIE_BASE_URL=AppUrl.BASE_URL_TOPRATED;
             }
-            final String API_KEY_PARAM = "api_key";
+
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
-                    .appendQueryParameter(API_KEY_PARAM, BuildConfig.MOVIE_API_KEY)
+                    .appendQueryParameter(AppUrl.API_KEY_PARAM, BuildConfig.MOVIE_API_KEY)
                     .build();
 
             URL url = new URL(builtUri.toString());
