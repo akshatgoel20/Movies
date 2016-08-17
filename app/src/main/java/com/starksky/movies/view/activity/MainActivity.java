@@ -1,9 +1,8 @@
 package com.starksky.movies.view.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,11 +16,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(savedInstanceState==null && CommonUtils.isNetworkAvailable(this)){
-          getSupportFragmentManager().beginTransaction()
-                  .add(R.id.container,new  GridPosterFragment())
-                  .commit();
-        }else{
+
+        if (savedInstanceState == null && CommonUtils.isNetworkAvailable(this)) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new GridPosterFragment())
+                    .commit();
+        } else {
             CommonUtils.showDialog(this, "Loading... Please connect to internet");
             return;
         }
@@ -29,15 +29,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_refresh && CommonUtils.isNetworkAvailable(this)){
-            startActivity(new Intent(this,MainActivity.class));
+        if (id == R.id.action_refresh && CommonUtils.isNetworkAvailable(this)) {
+            startActivity(new Intent(this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

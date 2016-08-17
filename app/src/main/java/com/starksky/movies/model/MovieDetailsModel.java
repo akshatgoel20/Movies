@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class MovieDetailsModel {
     @SerializedName("poster_path")
-    private String poster_path ;
+    private String poster_path;
 
     @SerializedName("overview")
     private String synopsis = "overview";
@@ -19,15 +19,11 @@ public class MovieDetailsModel {
     private String release_date = "release_date";
 
     @SerializedName("vote_average")
-    private String user_rating = "vote_average" ;
+    private String user_rating = "vote_average";
 
-    public MovieDetailsModel(String poster_path, String synopsis,String title, String release_date, String user_rating){
-        this.poster_path=poster_path;
-        this.synopsis=synopsis;
-        this.title=title;
-        this.release_date=release_date;
-        this.user_rating=user_rating;
-    }
+    @SerializedName("id")
+    private String movie_id = "id";
+
 
 
     public String getPoster_path() {
@@ -68,5 +64,13 @@ public class MovieDetailsModel {
 
     public void setUser_rating(String user_rating) {
         this.user_rating = user_rating;
+    }
+
+    public String getMovie_id() {
+        return movie_id;
+    }
+
+    public void setMovie_id(String movie_id) {
+        this.movie_id = movie_id;
     }
 }
