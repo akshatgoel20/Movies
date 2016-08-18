@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.starksky.movies.R;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
+import com.starksky.movies.utils.FetchMovieReviews;
 import com.starksky.movies.utils.FetchMovieTrailers;
 
 import butterknife.BindView;
@@ -84,6 +85,7 @@ public class MovieDetailFragment extends Fragment {
 
     private void loadContent(){
         new FetchMovieTrailers(getActivity(),position).execute();
+        new FetchMovieReviews(getActivity(), position).execute();
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(position).getPoster_path());
         Picasso.with(getActivity())
                 .load(url)
