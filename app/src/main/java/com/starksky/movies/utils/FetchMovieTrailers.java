@@ -5,14 +5,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.starksky.movies.BuildConfig;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
-import com.starksky.movies.model.MovieDetailsModel;
 import com.starksky.movies.model.TrailerDetails;
 import com.starksky.movies.network.APIErrorException;
 import com.starksky.movies.network.APIListner;
@@ -34,10 +31,10 @@ public class FetchMovieTrailers extends AsyncTask<Void, Void, Void> {
     private static final String TAG = FetchMovieTrailers.class.getSimpleName();
     String MOVIE_BASE_TRAILERS_URL = AppUrl.BASE_URL_MOVIE;
     private Context context;
-    String id  ;
+    String id;
 
     public FetchMovieTrailers(Context context, int position) {
-        this.context = context ;
+        this.context = context;
 
         id = ArrayMovieDetails.getArrayList().get(position).getMovie_id();
     }
@@ -56,7 +53,7 @@ public class FetchMovieTrailers extends AsyncTask<Void, Void, Void> {
             VolleyRequestManager.getInstance(context).getMovieData(url, new APIListner.Success<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                     final String OWM_RESULT = "youtube";
+                    final String OWM_RESULT = "youtube";
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = response.getJSONArray(OWM_RESULT);
@@ -67,7 +64,7 @@ public class FetchMovieTrailers extends AsyncTask<Void, Void, Void> {
                     Type listType = new TypeToken<ArrayList<TrailerDetails>>() {
                     }.getType();
                     list = new GsonBuilder().create().fromJson(String.valueOf(jsonArray), listType);
-                   ArrayMovieDetails.setTrailerDetailsArrayList(list);
+                    ArrayMovieDetails.setTrailerDetailsArrayList(list);
 
 
                 }

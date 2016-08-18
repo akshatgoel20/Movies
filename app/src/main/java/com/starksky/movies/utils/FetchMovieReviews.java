@@ -11,7 +11,6 @@ import com.starksky.movies.BuildConfig;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 import com.starksky.movies.model.ReviewDetails;
-import com.starksky.movies.model.TrailerDetails;
 import com.starksky.movies.network.APIErrorException;
 import com.starksky.movies.network.APIListner;
 import com.starksky.movies.network.VolleyRequestManager;

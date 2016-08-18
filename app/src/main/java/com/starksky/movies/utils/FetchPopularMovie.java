@@ -1,6 +1,5 @@
 package com.starksky.movies.utils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -44,15 +43,15 @@ public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
         BufferedReader reader = null;
         String format = "json";
         String movieJsonString = null;
-          String MOVIE_BASE_URL ="";
+        String MOVIE_BASE_URL = "";
 
         try {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            String movieSharedPref = sharedPreferences.getString("sort","mpop");
-            if(movieSharedPref.equals("mpop")){
-                  MOVIE_BASE_URL = AppUrl.BASE_URL_POPULAR;
-            }else if(movieSharedPref.equals("hrate")){
-                MOVIE_BASE_URL=AppUrl.BASE_URL_TOPRATED;
+            String movieSharedPref = sharedPreferences.getString("sort", "mpop");
+            if (movieSharedPref.equals("mpop")) {
+                MOVIE_BASE_URL = AppUrl.BASE_URL_POPULAR;
+            } else if (movieSharedPref.equals("hrate")) {
+                MOVIE_BASE_URL = AppUrl.BASE_URL_TOPRATED;
             }
 
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
@@ -106,12 +105,11 @@ public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
     }
 
 
-
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-       CommonUtils.stopDialog();
-       GridPosterFragment.updateGridView();
+        CommonUtils.stopDialog();
+        GridPosterFragment.updateGridView();
 
     }
 
