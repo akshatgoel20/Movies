@@ -1,10 +1,10 @@
 package com.starksky.movies.view.fragment;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.starksky.movies.R;
+import com.starksky.movies.adapter.ReviewsAdapter;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 import com.starksky.movies.utils.FetchMovieReviews;
@@ -34,11 +35,20 @@ public class MovieDetailFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     int position;
-    @BindView(R.id.detail_movie_poster) ImageView movie_detail_image;
-    @BindView(R.id.detail_movie_title) TextView movie_detail_title;
-    @BindView(R.id.detail_movie_rating) TextView movie_detail_rating;
-    @BindView(R.id.detail_movie_reldate) TextView movie_detail_reldate;
-    @BindView(R.id.movie_detail_synopsis) TextView movie_detail_synopsis;
+    @BindView(R.id.detail_movie_poster)
+    ImageView movie_detail_image;
+    @BindView(R.id.detail_movie_title)
+    TextView movie_detail_title;
+    @BindView(R.id.detail_movie_rating)
+    TextView movie_detail_rating;
+    @BindView(R.id.detail_movie_reldate)
+    TextView movie_detail_reldate;
+    @BindView(R.id.movie_detail_synopsis)
+    TextView movie_detail_synopsis;
+    @BindView(R.id.movie_reviews)
+    RecyclerView movie_reviews;
+    @BindView(R.id.movie_videos)
+    RecyclerView movie_trailers ;
 
     private OnFragmentInteractionListener mListener;
 
@@ -83,8 +93,8 @@ public class MovieDetailFragment extends Fragment {
         return rootView;
     }
 
-    private void loadContent(){
-        new FetchMovieTrailers(getActivity(),position).execute();
+    private void loadContent() {
+        new FetchMovieTrailers(getActivity(), position).execute();
         new FetchMovieReviews(getActivity(), position).execute();
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(position).getPoster_path());
         Picasso.with(getActivity())
@@ -94,6 +104,8 @@ public class MovieDetailFragment extends Fragment {
         movie_detail_reldate.setText(ArrayMovieDetails.getArrayList().get(position).getRelease_date());
         movie_detail_rating.setText(ArrayMovieDetails.getArrayList().get(position).getUser_rating());
         movie_detail_synopsis.setText(ArrayMovieDetails.getArrayList().get(position).getSynopsis());
+        movie_reviews.setLayoutManager(new LinearLayoutManager(movie_reviews.getContext()));
+        movie_reviews.setAdapter(new ReviewsAdapter());
 
     }
 
