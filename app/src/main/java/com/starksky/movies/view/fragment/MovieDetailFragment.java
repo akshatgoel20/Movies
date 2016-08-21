@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,7 @@ import com.starksky.movies.adapter.ReviewsAdapter;
 import com.starksky.movies.adapter.TrailersAdapter;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
-import com.starksky.movies.utils.FetchMovieReviews;
-import com.starksky.movies.utils.FetchMovieTrailers;
+import com.starksky.movies.utils.RecyclerItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +89,14 @@ public class MovieDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         movie_reviews = (RecyclerView) rootView.findViewById(R.id.movie_reviews);
         movie_trailers = (RecyclerView) rootView.findViewById(R.id.movie_videos);
+        movie_trailers.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                      Log.d("youtubemovie",String.valueOf(position));
+                    }
+                })
+        );
         ButterKnife.bind(this, rootView);
         loadContent();
         return rootView;
@@ -104,6 +112,7 @@ public class MovieDetailFragment extends Fragment {
         movie_detail_reldate.setText(ArrayMovieDetails.getArrayList().get(position).getRelease_date());
         movie_detail_rating.setText(ArrayMovieDetails.getArrayList().get(position).getUser_rating());
         movie_detail_synopsis.setText(ArrayMovieDetails.getArrayList().get(position).getSynopsis());
+
 
     }
 
