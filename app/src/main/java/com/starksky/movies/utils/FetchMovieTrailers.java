@@ -14,6 +14,7 @@ import com.starksky.movies.model.TrailerDetails;
 import com.starksky.movies.network.APIErrorException;
 import com.starksky.movies.network.APIListner;
 import com.starksky.movies.network.VolleyRequestManager;
+import com.starksky.movies.view.fragment.MovieDetailFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,7 +66,7 @@ public class FetchMovieTrailers extends AsyncTask<Void, Void, Void> {
                     }.getType();
                     list = new GsonBuilder().create().fromJson(String.valueOf(jsonArray), listType);
                     ArrayMovieDetails.setTrailerDetailsArrayList(list);
-
+                    updateFinish();
 
                 }
             }, new APIListner.Error() {
@@ -78,5 +79,11 @@ public class FetchMovieTrailers extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+
+    void updateFinish(){
+        MovieDetailFragment.updateTrailerAdapter();
     }
 }

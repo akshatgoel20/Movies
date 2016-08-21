@@ -14,6 +14,7 @@ import com.starksky.movies.model.ReviewDetails;
 import com.starksky.movies.network.APIErrorException;
 import com.starksky.movies.network.APIListner;
 import com.starksky.movies.network.VolleyRequestManager;
+import com.starksky.movies.view.fragment.MovieDetailFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +64,7 @@ public class FetchMovieReviews extends AsyncTask<Void, Void, Void> {
                     }.getType();
                     list = new GsonBuilder().create().fromJson(String.valueOf(jsonArray), listType);
                     ArrayMovieDetails.setReviewDetailsArrayList(list);
+                    updateFinish();
 
 
                 }
@@ -76,5 +78,9 @@ public class FetchMovieReviews extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    void updateFinish(){
+        MovieDetailFragment.updateReviewAdapter();
     }
 }

@@ -25,6 +25,7 @@ public class ArrayMovieDetails {
     }
 
     public static void setTrailerDetailsArrayList(ArrayList<TrailerDetails> trailerDetailsArrayList) {
+
         ArrayMovieDetails.trailerDetailsArrayList = trailerDetailsArrayList;
     }
 

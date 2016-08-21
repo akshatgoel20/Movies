@@ -18,14 +18,17 @@ import android.widget.GridView;
 import com.starksky.movies.R;
 import com.starksky.movies.adapter.GridPosterAdapter;
 import com.starksky.movies.utils.CommonUtils;
+import com.starksky.movies.utils.FetchMovieReviews;
+import com.starksky.movies.utils.FetchMovieTrailers;
 import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.activity.SettingsActivity;
 
 public class GridPosterFragment extends Fragment {
 
-private static final String TAG = GridPosterFragment.class.getSimpleName();
-   static GridView gridView ;
-  static  GridPosterAdapter gridPosterAdapter ;
+    private static final String TAG = GridPosterFragment.class.getSimpleName();
+    static GridView gridView;
+    static GridPosterAdapter gridPosterAdapter;
+
     public GridPosterFragment() {
         // Required empty public constructor
     }
@@ -42,7 +45,7 @@ private static final String TAG = GridPosterFragment.class.getSimpleName();
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_grid_poster, container, false);
-         gridView = (GridView) rootview.findViewById(R.id.postergrid);
+        gridView = (GridView) rootview.findViewById(R.id.postergrid);
         gridPosterAdapter = new GridPosterAdapter(getActivity());
         gridView.setAdapter(gridPosterAdapter);
         gridPosterAdapter.notifyDataSetChanged();
@@ -55,6 +58,8 @@ private static final String TAG = GridPosterFragment.class.getSimpleName();
                 Fragment fragment = new MovieDetailFragment();
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                new FetchMovieTrailers(getActivity(), i).execute();
+                new FetchMovieReviews(getActivity(), i).execute();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
                 fragmentTransaction.commit();
@@ -82,12 +87,12 @@ private static final String TAG = GridPosterFragment.class.getSimpleName();
     @Override
     public void onStart() {
         super.onStart();
-if(CommonUtils.isNetworkAvailable(getActivity())){
-    updateInfo();
-}else{
-    CommonUtils.toast(getActivity(),"Please connect to internet");
-    return;
-}
+        if (CommonUtils.isNetworkAvailable(getActivity())) {
+            updateInfo();
+        } else {
+            CommonUtils.toast(getActivity(), "Please connect to internet");
+            return;
+        }
 
 
     }
@@ -97,7 +102,7 @@ if(CommonUtils.isNetworkAvailable(getActivity())){
         new FetchPopularMovie().execute(getActivity());
     }
 
-static  public void updateGridView(){
-     gridView.setAdapter(gridPosterAdapter);
- }
+    static public void updateGridView() {
+        gridView.setAdapter(gridPosterAdapter);
+    }
 }

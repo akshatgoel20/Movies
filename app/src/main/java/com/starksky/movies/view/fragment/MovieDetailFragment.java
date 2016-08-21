@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.starksky.movies.R;
 import com.starksky.movies.adapter.ReviewsAdapter;
+import com.starksky.movies.adapter.TrailersAdapter;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 import com.starksky.movies.utils.FetchMovieReviews;
@@ -45,10 +46,8 @@ public class MovieDetailFragment extends Fragment {
     TextView movie_detail_reldate;
     @BindView(R.id.movie_detail_synopsis)
     TextView movie_detail_synopsis;
-    @BindView(R.id.movie_reviews)
-    RecyclerView movie_reviews;
-    @BindView(R.id.movie_videos)
-    RecyclerView movie_trailers ;
+    static RecyclerView movie_reviews;
+    static RecyclerView movie_trailers;
 
     private OnFragmentInteractionListener mListener;
 
@@ -88,14 +87,15 @@ public class MovieDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+        movie_reviews = (RecyclerView) rootView.findViewById(R.id.movie_reviews);
+        movie_trailers = (RecyclerView) rootView.findViewById(R.id.movie_videos);
         ButterKnife.bind(this, rootView);
         loadContent();
         return rootView;
     }
 
     private void loadContent() {
-        new FetchMovieTrailers(getActivity(), position).execute();
-        new FetchMovieReviews(getActivity(), position).execute();
+
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(position).getPoster_path());
         Picasso.with(getActivity())
                 .load(url)
@@ -104,8 +104,6 @@ public class MovieDetailFragment extends Fragment {
         movie_detail_reldate.setText(ArrayMovieDetails.getArrayList().get(position).getRelease_date());
         movie_detail_rating.setText(ArrayMovieDetails.getArrayList().get(position).getUser_rating());
         movie_detail_synopsis.setText(ArrayMovieDetails.getArrayList().get(position).getSynopsis());
-        movie_reviews.setLayoutManager(new LinearLayoutManager(movie_reviews.getContext()));
-        movie_reviews.setAdapter(new ReviewsAdapter());
 
     }
 
@@ -114,6 +112,17 @@ public class MovieDetailFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public static void updateReviewAdapter() {
+        movie_reviews.setLayoutManager(new LinearLayoutManager(movie_reviews.getContext()));
+        movie_reviews.setAdapter(new ReviewsAdapter());
+
+    }
+
+    public static void updateTrailerAdapter() {
+        movie_trailers.setLayoutManager(new LinearLayoutManager(movie_trailers.getContext()));
+        movie_trailers.setAdapter(new TrailersAdapter());
     }
 
    /* @Override

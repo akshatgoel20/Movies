@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.starksky.movies.R;
 import com.starksky.movies.model.ArrayMovieDetails;
+import com.starksky.movies.view.fragment.MovieDetailFragment;
 
 /**
  * Created by akshat on 19/08/16.
@@ -48,4 +49,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public int getItemCount() {
         return ArrayMovieDetails.getReviewDetailsArrayList().size();
     }
+
+
 }
