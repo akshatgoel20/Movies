@@ -1,5 +1,6 @@
 package com.starksky.movies.view.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,7 @@ public class MovieDetailFragment extends Fragment {
     TextView movie_detail_synopsis;
     static RecyclerView movie_reviews;
     static RecyclerView movie_trailers;
+    String youtubeURL = AppUrl.BASE_YOUTUBE_URL;
 
     private OnFragmentInteractionListener mListener;
 
@@ -93,7 +95,9 @@ public class MovieDetailFragment extends Fragment {
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                      Log.d("youtubemovie",String.valueOf(position));
+                     youtubeURL =   AppUrl.BASE_YOUTUBE_URL.concat(ArrayMovieDetails.getTrailerDetailsArrayList().get(position).getSource());
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeURL)));
+
                     }
                 })
         );
