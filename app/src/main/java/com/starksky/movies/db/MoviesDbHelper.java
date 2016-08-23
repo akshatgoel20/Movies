@@ -10,12 +10,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MoviesDbHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "movies.db";
-    private static final int DATABASE_SCHEMA_VERSION = 1;
+    private static final int DATABASE_VERSION = 1;
     private static final String SQL_DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
 
 
-    public MoviesDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public MoviesDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
