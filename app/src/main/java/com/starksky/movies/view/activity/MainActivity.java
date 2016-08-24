@@ -17,13 +17,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null && CommonUtils.isNetworkAvailable(this)) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new GridPosterFragment())
-                    .commit();
-        } else {
+        if (!CommonUtils.isNetworkAvailable(this)) {
             CommonUtils.showDialog(this, "Loading... Please connect to internet");
             return;
+        }
+
+        if (savedInstanceState == null) {
+            if (findViewById(R.id.fragment_movie) != null) {
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new GridPosterFragment())
+                        .commit();
+            }
         }
     }
 
