@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass
  * Activities that contain this fragment must implement the
  * {@link MovieDetailFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
@@ -95,7 +94,7 @@ public class MovieDetailFragment extends Fragment {
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                     youtubeURL =   AppUrl.BASE_YOUTUBE_URL.concat(ArrayMovieDetails.getTrailerDetailsArrayList().get(position).getSource());
+                        youtubeURL = AppUrl.BASE_YOUTUBE_URL.concat(ArrayMovieDetails.getTrailerDetailsArrayList().get(position).getSource());
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeURL)));
 
                     }
@@ -106,7 +105,7 @@ public class MovieDetailFragment extends Fragment {
         return rootView;
     }
 
-    private void loadContent() {
+    private  void loadContent() {
 
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(position).getPoster_path());
         Picasso.with(getActivity())

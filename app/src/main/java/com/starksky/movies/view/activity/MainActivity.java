@@ -8,6 +8,9 @@ import android.view.MenuItem;
 
 import com.starksky.movies.R;
 import com.starksky.movies.utils.CommonUtils;
+import com.starksky.movies.utils.FetchMovieReviews;
+import com.starksky.movies.utils.FetchMovieTrailers;
+import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.fragment.GridPosterFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,16 +18,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
 
         if (!CommonUtils.isNetworkAvailable(this)) {
             CommonUtils.showDialog(this, "Loading... Please connect to internet");
             return;
         }
+        new FetchPopularMovie().execute(this);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
+
             if (findViewById(R.id.fragment_movie) != null) {
+                new FetchMovieTrailers(this, 0).execute();
+                new FetchMovieReviews(this, 0).execute();
+
             } else {
+                setContentView(R.layout.activity_main);
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, new GridPosterFragment())
                         .commit();

@@ -5,6 +5,7 @@
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
+    android:id="@+id/container"
     tools:context=".view.activity.MainActivity">
 
     <!--
