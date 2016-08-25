@@ -61,8 +61,8 @@ public class GridPosterFragment extends Fragment {
                 new FetchMovieTrailers(getActivity(), i).execute();
                 new FetchMovieReviews(getActivity(), i).execute();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-         //      fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
-                fragmentTransaction.attach(fragment);
+               fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
+              //  fragmentTransaction.attach(fragment);
 
                 fragmentTransaction.commit();
             }
