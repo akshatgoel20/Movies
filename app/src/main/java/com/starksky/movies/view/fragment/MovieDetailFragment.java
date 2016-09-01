@@ -22,6 +22,7 @@ import com.starksky.movies.adapter.ReviewsAdapter;
 import com.starksky.movies.adapter.TrailersAdapter;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
+import com.starksky.movies.sync.MovieSync;
 import com.starksky.movies.utils.RecyclerItemClickListener;
 
 import butterknife.BindView;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
  * Use the {@link MovieDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieDetailFragment extends Fragment {
+public class MovieDetailFragment extends Fragment  {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -96,6 +97,7 @@ public class MovieDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         movie_reviews = (RecyclerView) rootView.findViewById(R.id.movie_reviews);
         movie_trailers = (RecyclerView) rootView.findViewById(R.id.movie_videos);
+        fav_button = (Button)rootView.findViewById(R.id.mark_as_fav_button);
         movie_trailers.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -106,6 +108,15 @@ public class MovieDetailFragment extends Fragment {
                     }
                 })
         );
+       fav_button.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               fav_button.setText("Marked As Favourite");
+               addMovie();
+           }
+       });
+
+
         ButterKnife.bind(this, rootView);
         loadContent();
         return rootView;
@@ -126,13 +137,10 @@ public class MovieDetailFragment extends Fragment {
 
     }
 
-    public void favbutton(View view) {
-        fav_button.setText("Marked As Favourite");
-        addMovie();
-    }
+
 
     void addMovie() {
-
+        new MovieSync(getActivity()).checkMovieExist(ArrayMovieDetails.getArrayList().get(position).getMovie_id(), position);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -169,6 +177,8 @@ public class MovieDetailFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
