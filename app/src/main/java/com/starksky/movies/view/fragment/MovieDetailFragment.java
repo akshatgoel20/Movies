@@ -1,6 +1,9 @@
 package com.starksky.movies.view.fragment;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +50,8 @@ public class MovieDetailFragment extends Fragment {
     TextView movie_detail_reldate;
     @BindView(R.id.movie_detail_synopsis)
     TextView movie_detail_synopsis;
+    @BindView(R.id.mark_as_fav_button)
+    Button fav_button;
     static RecyclerView movie_reviews;
     static RecyclerView movie_trailers;
     String youtubeURL = AppUrl.BASE_YOUTUBE_URL;
@@ -105,7 +111,8 @@ public class MovieDetailFragment extends Fragment {
         return rootView;
     }
 
-    private  void loadContent() {
+
+    private void loadContent() {
 
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(position).getPoster_path());
         Picasso.with(getActivity())
@@ -116,6 +123,15 @@ public class MovieDetailFragment extends Fragment {
         movie_detail_rating.setText(ArrayMovieDetails.getArrayList().get(position).getUser_rating());
         movie_detail_synopsis.setText(ArrayMovieDetails.getArrayList().get(position).getSynopsis());
 
+
+    }
+
+    public void favbutton(View view) {
+        fav_button.setText("Marked As Favourite");
+        addMovie();
+    }
+
+    void addMovie() {
 
     }
 
