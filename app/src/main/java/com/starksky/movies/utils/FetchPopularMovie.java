@@ -2,6 +2,7 @@ package com.starksky.movies.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import com.starksky.movies.BuildConfig;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 import com.starksky.movies.model.MovieDetailsModel;
+import com.starksky.movies.sync.MovieSync;
 import com.starksky.movies.view.fragment.GridPosterFragment;
 
 import org.json.JSONArray;
@@ -52,6 +54,9 @@ public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
                 MOVIE_BASE_URL = AppUrl.BASE_URL_POPULAR;
             } else if (movieSharedPref.equals("hrate")) {
                 MOVIE_BASE_URL = AppUrl.BASE_URL_TOPRATED;
+            } else if(movieSharedPref.equals("fav")){
+               new MovieSync(context).setFavMovie();
+                return null ;
             }
 
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()

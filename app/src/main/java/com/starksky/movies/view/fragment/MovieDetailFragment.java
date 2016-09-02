@@ -1,9 +1,6 @@
 package com.starksky.movies.view.fragment;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,7 +33,7 @@ import butterknife.ButterKnife;
  * Use the {@link MovieDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieDetailFragment extends Fragment  {
+public class MovieDetailFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -56,9 +53,9 @@ public class MovieDetailFragment extends Fragment  {
     static RecyclerView movie_reviews;
     static RecyclerView movie_trailers;
     String youtubeURL = AppUrl.BASE_YOUTUBE_URL;
-
+    boolean isMovieFav ;
     private OnFragmentInteractionListener mListener;
-
+    MovieSync movieSync ;
     public MovieDetailFragment() {
         // Required empty public constructor
     }
@@ -97,7 +94,14 @@ public class MovieDetailFragment extends Fragment  {
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         movie_reviews = (RecyclerView) rootView.findViewById(R.id.movie_reviews);
         movie_trailers = (RecyclerView) rootView.findViewById(R.id.movie_videos);
-        fav_button = (Button)rootView.findViewById(R.id.mark_as_fav_button);
+        fav_button = (Button) rootView.findViewById(R.id.mark_as_fav_button);
+        movieSync = new MovieSync(getActivity());
+        isMovieFav = new MovieSync(getActivity()).checkMovieExist(ArrayMovieDetails.getArrayList().get(position).getMovie_id());
+        if(isMovieFav){
+        fav_button.setText("Marked as favourite");
+        }else{
+        fav_button.setText("Mark as favourite");
+        }
         movie_trailers.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -108,13 +112,20 @@ public class MovieDetailFragment extends Fragment  {
                     }
                 })
         );
-       fav_button.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               fav_button.setText("Marked As Favourite");
-               addMovie();
-           }
-       });
+        fav_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (movieSync.checkMovieExist(ArrayMovieDetails.getArrayList().get(position).getMovie_id())) {
+                    fav_button.setText("Mark As Favourite");
+                    movieSync.deleteMovieFromFav(ArrayMovieDetails.getArrayList().get(position).getMovie_id());
+                } else {
+                    fav_button.setText("Marked As Favourite");
+                    movieSync.insertMovieIntoFav(position);
+                }
+
+
+            }
+        });
 
 
         ButterKnife.bind(this, rootView);
@@ -138,10 +149,6 @@ public class MovieDetailFragment extends Fragment  {
     }
 
 
-
-    void addMovie() {
-        new MovieSync(getActivity()).checkMovieExist(ArrayMovieDetails.getArrayList().get(position).getMovie_id(), position);
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -177,7 +184,6 @@ public class MovieDetailFragment extends Fragment  {
         super.onDetach();
         mListener = null;
     }
-
 
 
     /**
