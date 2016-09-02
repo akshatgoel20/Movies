@@ -20,6 +20,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.SettingsActivity"></activity>
+
+        <provider
+            android:authorities="com.starksky.movies"
+            android:name="com.starksky.movies.db.MoviesProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 
 import com.starksky.movies.db.MovieContract;
 import com.starksky.movies.model.ArrayMovieDetails;
@@ -13,24 +14,25 @@ import com.starksky.movies.model.ArrayMovieDetails;
  * Created by akshat on 01/09/16.
  */
 public class MovieSync {
-Context mContext ;
-    public MovieSync(Context context){
-        this.mContext = context ;
+    Context mContext;
+
+    public MovieSync(Context context) {
+        this.mContext = context;
     }
 
-   public  void checkMovieExist(String  movieId, int position) {
-        long movID ;
+    public void checkMovieExist(String movieId, int position) {
+        long movID;
         // First, check if the location with this city name exists in the db
-        Cursor locationCursor = mContext.getContentResolver().query(
+        Cursor movieCursor = mContext.getContentResolver().query(
                 MovieContract.MovieEntry.CONTENT_URI,
                 new String[]{MovieContract.MovieEntry._ID},
-                MovieContract.MovieEntry.COL_MOVIE_ID + " = ?",
+                MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ?",
                 new String[]{movieId},
                 null);
 
-        if (locationCursor.moveToFirst()) {
-            int movieIdindex = locationCursor.getColumnIndex(MovieContract.MovieEntry._ID);
-            movID = locationCursor.getLong(movieIdindex);
+        if (movieCursor.moveToFirst()) {
+            int movieIdindex = movieCursor.getColumnIndex(MovieContract.MovieEntry._ID);
+            movID = movieCursor.getLong(movieIdindex);
         } else {
             // Now that the content provider is set up, inserting rows of data is pretty simple.
             // First create a ContentValues object to hold the data you want to insert.
@@ -55,6 +57,7 @@ Context mContext ;
             movID = ContentUris.parseId(insertedUri);
         }
 
-        locationCursor.close();
+        movieCursor.close();
     }
 }
+
