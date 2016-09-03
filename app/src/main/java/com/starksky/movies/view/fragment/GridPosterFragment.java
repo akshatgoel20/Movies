@@ -126,7 +126,7 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
 
     @Override
     public void update() {
-        gridView.smoothScrollToPosition(mPosition);
         gridView.setAdapter(gridPosterAdapter);
+        gridView.smoothScrollToPosition(mPosition);
     }
 }
