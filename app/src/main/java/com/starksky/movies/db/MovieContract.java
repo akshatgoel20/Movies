@@ -41,7 +41,7 @@ public class MovieContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        protected static final String[] MOVIE_COLUMNS = {
+        public static final String[] MOVIE_COLUMNS = {
                 COLUMN_MOVIE_ID,
                 COLUMN_MOVIE_TITLE,
                 COLUMN_MOVIE_POSTER_PATH,

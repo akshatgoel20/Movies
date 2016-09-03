@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class MovieSync {
     Context mContext;
-    ArrayList<ArrayMovieDetails> arrayMovieDetailses = new ArrayList<>();
+    ArrayList<MovieDetailsModel> arrayMovieDetailses = new ArrayList<>();
     public MovieSync(Context context) {
         this.mContext = context;
     }
@@ -73,14 +73,24 @@ public class MovieSync {
     public void setFavMovie() {
         Cursor movieCursor = mContext.getContentResolver().query(
                 MovieContract.MovieEntry.CONTENT_URI,
-                new String[]{MovieContract.MovieEntry._ID},
+                MovieContract.MovieEntry.MOVIE_COLUMNS,
                 null,
                 null,
                 null);
-
-     do{
-       arrayMovieDetailses.set() movieCursor.getString(MovieContract.MovieEntry.COL_MOVIE_ID);
-     }while(movieCursor.moveToNext());
+        if (movieCursor.moveToFirst()) {
+            do {
+                MovieDetailsModel movieDetailsModel = new MovieDetailsModel();
+                movieDetailsModel.setTitle(movieCursor.getString(MovieContract.MovieEntry.COL_MOVIE_TITLE));
+                movieDetailsModel.setMovie_id(movieCursor.getString(MovieContract.MovieEntry.COL_MOVIE_ID));
+                movieDetailsModel.setPoster_path(movieCursor.getString(MovieContract.MovieEntry.COL_MOVIE_POSTER_PATH));
+                movieDetailsModel.setUser_rating(movieCursor.getString(MovieContract.MovieEntry.COL_MOVIE_VOTE_AVERAGE));
+                movieDetailsModel.setSynopsis(movieCursor.getString(MovieContract.MovieEntry.COL_MOVIE_OVERVIEW));
+                movieDetailsModel.setRelease_date(movieCursor.getString(MovieContract.MovieEntry.COL_MOVIE_RELEASE_DATE));
+                arrayMovieDetailses.add(movieDetailsModel);
+            } while (movieCursor.moveToNext());
+            new ArrayMovieDetails().setArrayList(arrayMovieDetailses);
+        }
+        movieCursor.close();
     }
 
 }
