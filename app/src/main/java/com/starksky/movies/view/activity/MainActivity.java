@@ -13,7 +13,9 @@ import com.starksky.movies.utils.FetchMovieTrailers;
 import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.fragment.GridPosterFragment;
 
-public class MainActivity extends AppCompatActivity {
+import iface.ResponseListener;
+
+public class MainActivity extends AppCompatActivity implements ResponseListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             CommonUtils.showDialog(this, "Loading... Please connect to internet");
             return;
         }
-        new FetchPopularMovie().execute(this);
+        new FetchPopularMovie(this).execute(this);
 
         try {
             Thread.sleep(2000);
@@ -61,5 +63,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void update() {
+        //
     }
 }

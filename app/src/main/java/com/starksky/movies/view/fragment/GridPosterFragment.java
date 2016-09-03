@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import com.starksky.movies.R;
 import com.starksky.movies.adapter.GridPosterAdapter;
@@ -23,11 +24,15 @@ import com.starksky.movies.utils.FetchMovieTrailers;
 import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.activity.SettingsActivity;
 
-public class GridPosterFragment extends Fragment {
+import iface.ResponseListener;
+
+public class GridPosterFragment extends Fragment implements ResponseListener{
 
     private static final String TAG = GridPosterFragment.class.getSimpleName();
     static GridView gridView;
     static GridPosterAdapter gridPosterAdapter;
+    private int mPosition = GridView.INVALID_POSITION;
+    private static final String SELECTED_KEY = "selected_position";
 
     public GridPosterFragment() {
         // Required empty public constructor
@@ -68,6 +73,12 @@ public class GridPosterFragment extends Fragment {
             }
         });
 
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            // The listview probably hasn't even been populated yet.  Actually perform the
+            // swapout in onLoadFinished.
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
+
         return rootview;
     }
 
@@ -99,12 +110,26 @@ public class GridPosterFragment extends Fragment {
 
     }
 
-    void updateInfo() {
-        CommonUtils.showDialog(getActivity(), "Loading...");
-        new FetchPopularMovie().execute(getActivity());
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //to save the instance state, gets called when activity gets closed
+        mPosition = gridView.getFirstVisiblePosition();
+        if (mPosition != GridView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+        super.onSaveInstanceState(outState);
     }
 
-    static public void updateGridView() {
+    void updateInfo() {
+        CommonUtils.showDialog(getActivity(), "Loading...");
+        new FetchPopularMovie(this).execute(getActivity());
+    }
+
+
+
+    @Override
+    public void update() {
+        gridView.smoothScrollToPosition(mPosition);
         gridView.setAdapter(gridPosterAdapter);
     }
 }

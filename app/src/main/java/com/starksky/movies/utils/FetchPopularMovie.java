@@ -31,12 +31,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import iface.ResponseListener;
+
 /**
  * Created by akshat on 23/07/16.
  */
 public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
 
     Context context;
+    ResponseListener responseListener ;
+
+
+
+    public FetchPopularMovie(ResponseListener responseListener){
+        this.responseListener=  responseListener ;
+    }
+
+
 
     @Override
     protected Void doInBackground(Context... objects) {
@@ -114,7 +125,8 @@ public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         CommonUtils.stopDialog();
-        GridPosterFragment.updateGridView();
+        responseListener.update();
+    //    GridPosterFragment.updateGridView();
 
     }
 
