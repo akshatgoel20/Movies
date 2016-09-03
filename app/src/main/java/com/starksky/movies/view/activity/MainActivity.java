@@ -13,7 +13,7 @@ import com.starksky.movies.utils.FetchMovieTrailers;
 import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.fragment.GridPosterFragment;
 
-import iface.ResponseListener;
+import com.starksky.movies.iface.ResponseListener;
 
 public class MainActivity extends AppCompatActivity implements ResponseListener{
 

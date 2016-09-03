@@ -1,4 +1,4 @@
-package iface;
+package com.starksky.movies.iface;
 
 /**
  * Created by akshat on 03/09/16.

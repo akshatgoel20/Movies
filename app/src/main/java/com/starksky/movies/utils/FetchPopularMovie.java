@@ -2,7 +2,6 @@ package com.starksky.movies.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -16,7 +15,6 @@ import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
 import com.starksky.movies.model.MovieDetailsModel;
 import com.starksky.movies.sync.MovieSync;
-import com.starksky.movies.view.fragment.GridPosterFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import iface.ResponseListener;
+import com.starksky.movies.iface.ResponseListener;
 
 /**
  * Created by akshat on 23/07/16.

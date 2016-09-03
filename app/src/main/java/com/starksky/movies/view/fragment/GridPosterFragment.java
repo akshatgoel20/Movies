@@ -14,19 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import com.starksky.movies.R;
 import com.starksky.movies.adapter.GridPosterAdapter;
+import com.starksky.movies.iface.ResponseListener;
 import com.starksky.movies.utils.CommonUtils;
 import com.starksky.movies.utils.FetchMovieReviews;
 import com.starksky.movies.utils.FetchMovieTrailers;
 import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.activity.SettingsActivity;
 
-import iface.ResponseListener;
-
-public class GridPosterFragment extends Fragment implements ResponseListener{
+public class GridPosterFragment extends Fragment implements ResponseListener {
 
     private static final String TAG = GridPosterFragment.class.getSimpleName();
     static GridView gridView;
@@ -66,8 +64,8 @@ public class GridPosterFragment extends Fragment implements ResponseListener{
                 new FetchMovieTrailers(getActivity(), i).execute();
                 new FetchMovieReviews(getActivity(), i).execute();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-               fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
-              //  fragmentTransaction.attach(fragment);
+                fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
+                //  fragmentTransaction.attach(fragment);
 
                 fragmentTransaction.commit();
             }
@@ -124,7 +122,6 @@ public class GridPosterFragment extends Fragment implements ResponseListener{
         CommonUtils.showDialog(getActivity(), "Loading...");
         new FetchPopularMovie(this).execute(getActivity());
     }
-
 
 
     @Override
