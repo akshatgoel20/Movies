@@ -144,7 +144,8 @@ public class MovieDetailFragment extends Fragment {
         movie_detail_reldate.setText(ArrayMovieDetails.getArrayList().get(position).getRelease_date());
         movie_detail_rating.setText(ArrayMovieDetails.getArrayList().get(position).getUser_rating());
         movie_detail_synopsis.setText(ArrayMovieDetails.getArrayList().get(position).getSynopsis());
-
+        updateReviewAdapter();
+        updateTrailerAdapter();
 
     }
 
