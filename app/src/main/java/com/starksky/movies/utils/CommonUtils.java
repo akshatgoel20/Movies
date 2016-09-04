@@ -14,6 +14,16 @@ public class CommonUtils {
 
     static Dialog progress;
 
+    public static boolean isTb() {
+        return isTb;
+    }
+
+    public static void setIsTb(boolean isTb) {
+        CommonUtils.isTb = isTb;
+    }
+
+    public static boolean isTb ;
+
     public static void showDialog(Context context, String msg) {
         progress = new ProgressDialog(context);
 

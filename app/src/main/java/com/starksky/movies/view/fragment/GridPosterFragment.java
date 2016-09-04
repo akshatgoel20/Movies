@@ -1,7 +1,9 @@
 package com.starksky.movies.view.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +33,8 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
     static GridPosterAdapter gridPosterAdapter;
     private int mPosition = GridView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
+    private static final String SELECTED_SORT = "sort";
+  private String sort = "def" ;
 
     public GridPosterFragment() {
         // Required empty public constructor
@@ -64,23 +68,23 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
                 new FetchMovieTrailers(getActivity(), i).execute();
                 new FetchMovieReviews(getActivity(), i).execute();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                if(!isTab()) {
+                if (!CommonUtils.isTb()) {
                     fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
                     //  fragmentTransaction.attach(fragment);
 
                     fragmentTransaction.commit();
-                }else {
-                  //  Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
+                } else {
+                    //  Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
                  /*   fragmentTransaction.detach(fragment1);
                     fragmentTransaction.attach(fragment1);
                     fragmentTransaction.commit();*/
 
                     new FetchMovieTrailers(getActivity(), i).execute();
                     new FetchMovieReviews(getActivity(), i).execute();
-                 MovieDetailFragment movieDetailFragment =    MovieDetailFragment.newInstance(i);
+                    MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(i);
 
-                 //   fragmentTransaction.detach(fragment1);
-                    fragmentTransaction.replace(R.id.movie_detail_container,movieDetailFragment);
+                    //   fragmentTransaction.detach(fragment1);
+                    fragmentTransaction.replace(R.id.movie_detail_container, movieDetailFragment);
                     fragmentTransaction.commit();
                 }
             }
@@ -90,18 +94,12 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
             // The gridview probably hasn't even been populated yet.  Actually perform the
             // swapout in onLoadFinished.
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
+            sort = savedInstanceState.getString(SELECTED_SORT);
         }
 
         return rootview;
     }
 
-    boolean isTab() {
-        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
-      if(fragment != null){
-          return  true ;
-      }
-        return false ;
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -118,17 +116,27 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
-        if (CommonUtils.isNetworkAvailable(getActivity())) {
-            updateInfo();
-        } else {
-            CommonUtils.toast(getActivity(), "Please connect to internet");
-            return;
+        if(!sort.equals(getSortType())) {
+            if (CommonUtils.isNetworkAvailable(getActivity())) {
+                updateInfo();
+            } else {
+                CommonUtils.toast(getActivity(), "Please connect to internet");
+                return;
+            }
         }
 
 
+    }
+
+    String getSortType(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String movieSharedPref = sharedPreferences.getString("sort", "mpop");
+        return movieSharedPref ;
     }
 
     @Override
@@ -137,6 +145,8 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
         mPosition = gridView.getFirstVisiblePosition();
         if (mPosition != GridView.INVALID_POSITION) {
             outState.putInt(SELECTED_KEY, mPosition);
+           sort = getSortType();
+            outState.putString(SELECTED_SORT,sort);
         }
         super.onSaveInstanceState(outState);
     }

@@ -38,7 +38,6 @@ public class MovieDetailFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "position";
     int position;
-    @BindView(R.id.detail_movie_poster)
     ImageView movie_detail_image;
     @BindView(R.id.detail_movie_title)
     TextView movie_detail_title;
@@ -94,6 +93,7 @@ public class MovieDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         movie_reviews = (RecyclerView) rootView.findViewById(R.id.movie_reviews);
         movie_trailers = (RecyclerView) rootView.findViewById(R.id.movie_videos);
+        movie_detail_image = (ImageView)rootView.findViewById(R.id.detail_movie_poster);
         fav_button = (Button) rootView.findViewById(R.id.mark_as_fav_button);
         movieSync = new MovieSync(getActivity());
         isMovieFav = new MovieSync(getActivity()).checkMovieExist(ArrayMovieDetails.getArrayList().get(position).getMovie_id());

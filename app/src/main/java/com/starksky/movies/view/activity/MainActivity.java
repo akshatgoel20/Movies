@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements ResponseListener{
 
         if (savedInstanceState == null) {
 
-            if (findViewById(R.id.fragment_movie) != null) {
+            if (isTab()) {
                 new FetchMovieTrailers(this, 0).execute();
                 new FetchMovieReviews(this, 0).execute();
                 getSupportFragmentManager().beginTransaction()
@@ -54,6 +54,17 @@ public class MainActivity extends AppCompatActivity implements ResponseListener{
                         .commit();
             }
         }
+    }
+
+  public  boolean isTab(){
+        if(findViewById(R.id.movie_detail_container) != null){
+            CommonUtils.setIsTb(true);
+            return true ;
+        }else{
+            CommonUtils.setIsTb(false);
+            return false;
+        }
+
     }
 
     @Override
