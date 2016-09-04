@@ -64,20 +64,30 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
                 new FetchMovieTrailers(getActivity(), i).execute();
                 new FetchMovieReviews(getActivity(), i).execute();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
-                //  fragmentTransaction.attach(fragment);
+                if(!isTab()) {
+                    fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
+                    //  fragmentTransaction.attach(fragment);
 
-                fragmentTransaction.commit();
+                    fragmentTransaction.commit();
+                }
             }
         });
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
-            // The listview probably hasn't even been populated yet.  Actually perform the
+            // The gridview probably hasn't even been populated yet.  Actually perform the
             // swapout in onLoadFinished.
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
 
         return rootview;
+    }
+
+    boolean isTab() {
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
+      if(fragment.isVisible()){
+          return  true ;
+      }
+        return false ;
     }
 
     @Override
