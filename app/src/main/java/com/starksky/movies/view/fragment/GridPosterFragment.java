@@ -69,6 +69,18 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
                     //  fragmentTransaction.attach(fragment);
 
                     fragmentTransaction.commit();
+                }else {
+                    Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
+                 /*   fragmentTransaction.detach(fragment1);
+                    fragmentTransaction.attach(fragment1);
+                    fragmentTransaction.commit();*/
+
+
+                 MovieDetailFragment movieDetailFragment =    MovieDetailFragment.newInstance(i);
+
+                 //   fragmentTransaction.detach(fragment1);
+                    fragmentTransaction.replace(R.id.movie_detail_container,movieDetailFragment);
+                    fragmentTransaction.commit();
                 }
             }
         });
