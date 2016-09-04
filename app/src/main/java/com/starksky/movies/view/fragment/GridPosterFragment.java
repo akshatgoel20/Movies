@@ -70,7 +70,7 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
 
                     fragmentTransaction.commit();
                 }else {
-                    Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
+                  //  Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
                  /*   fragmentTransaction.detach(fragment1);
                     fragmentTransaction.attach(fragment1);
                     fragmentTransaction.commit();*/
@@ -96,7 +96,7 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
 
     boolean isTab() {
         Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.movie_detail_container);
-      if(fragment.isVisible()){
+      if(fragment != null){
           return  true ;
       }
         return false ;

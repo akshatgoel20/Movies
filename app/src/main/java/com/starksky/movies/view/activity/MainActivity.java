@@ -14,8 +14,11 @@ import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.fragment.GridPosterFragment;
 
 import com.starksky.movies.iface.ResponseListener;
+import com.starksky.movies.view.fragment.MovieDetailFragment;
 
 public class MainActivity extends AppCompatActivity implements ResponseListener{
+
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements ResponseListener{
             if (findViewById(R.id.fragment_movie) != null) {
                 new FetchMovieTrailers(this, 0).execute();
                 new FetchMovieReviews(this, 0).execute();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.movie_detail_container, new MovieDetailFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
 
             } else {
                 setContentView(R.layout.activity_main);
