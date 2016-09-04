@@ -75,7 +75,8 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
                     fragmentTransaction.attach(fragment1);
                     fragmentTransaction.commit();*/
 
-
+                    new FetchMovieTrailers(getActivity(), i).execute();
+                    new FetchMovieReviews(getActivity(), i).execute();
                  MovieDetailFragment movieDetailFragment =    MovieDetailFragment.newInstance(i);
 
                  //   fragmentTransaction.detach(fragment1);
