@@ -16,7 +16,7 @@ import com.starksky.movies.view.fragment.GridPosterFragment;
 import com.starksky.movies.iface.ResponseListener;
 import com.starksky.movies.view.fragment.MovieDetailFragment;
 
-public class MainActivity extends AppCompatActivity implements ResponseListener{
+public class MainActivity extends AppCompatActivity implements ResponseListener {
 
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
@@ -56,16 +56,18 @@ public class MainActivity extends AppCompatActivity implements ResponseListener{
         }
     }
 
-  public  boolean isTab(){
-        if(findViewById(R.id.movie_detail_container) != null){
+    public boolean isTab() {
+        if (findViewById(R.id.movie_detail_container) != null) {
             CommonUtils.setIsTb(true);
-            return true ;
-        }else{
+            return true;
+        } else {
             CommonUtils.setIsTb(false);
             return false;
         }
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements ResponseListener{
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void update() {
