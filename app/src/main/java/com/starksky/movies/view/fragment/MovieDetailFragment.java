@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.starksky.movies.R;
 import com.starksky.movies.adapter.ReviewsAdapter;
 import com.starksky.movies.adapter.TrailersAdapter;
@@ -37,6 +37,8 @@ public class MovieDetailFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "position";
+    static RecyclerView movie_reviews;
+    static RecyclerView movie_trailers;
     int position;
     ImageView movie_detail_image;
     @BindView(R.id.detail_movie_title)
@@ -49,12 +51,11 @@ public class MovieDetailFragment extends Fragment {
     TextView movie_detail_synopsis;
     @BindView(R.id.mark_as_fav_button)
     Button fav_button;
-    static RecyclerView movie_reviews;
-    static RecyclerView movie_trailers;
     String youtubeURL = AppUrl.BASE_YOUTUBE_URL;
-    boolean isMovieFav ;
+    boolean isMovieFav;
+    MovieSync movieSync;
     private OnFragmentInteractionListener mListener;
-    MovieSync movieSync ;
+
     public MovieDetailFragment() {
         // Required empty public constructor
     }
@@ -63,7 +64,6 @@ public class MovieDetailFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     *
      * @param position Parameter 2.
      * @return A new instance of fragment MovieDetailFragment.
      */
@@ -71,10 +71,21 @@ public class MovieDetailFragment extends Fragment {
     public static MovieDetailFragment newInstance(int position) {
         MovieDetailFragment fragment = new MovieDetailFragment();
         Bundle args = new Bundle();
-     //   args.putString(ARG_PARAM1, param1);
+        //   args.putString(ARG_PARAM1, param1);
         args.putInt(ARG_PARAM2, position);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static void updateReviewAdapter() {
+        movie_reviews.setLayoutManager(new LinearLayoutManager(movie_reviews.getContext()));
+        movie_reviews.setAdapter(new ReviewsAdapter());
+
+    }
+
+    public static void updateTrailerAdapter() {
+        movie_trailers.setLayoutManager(new LinearLayoutManager(movie_trailers.getContext()));
+        movie_trailers.setAdapter(new TrailersAdapter());
     }
 
     @Override
@@ -93,14 +104,14 @@ public class MovieDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         movie_reviews = (RecyclerView) rootView.findViewById(R.id.movie_reviews);
         movie_trailers = (RecyclerView) rootView.findViewById(R.id.movie_videos);
-        movie_detail_image = (ImageView)rootView.findViewById(R.id.detail_movie_poster);
+        movie_detail_image = (ImageView) rootView.findViewById(R.id.detail_movie_poster);
         fav_button = (Button) rootView.findViewById(R.id.mark_as_fav_button);
         movieSync = new MovieSync(getActivity());
         isMovieFav = new MovieSync(getActivity()).checkMovieExist(ArrayMovieDetails.getArrayList().get(position).getMovie_id());
-        if(isMovieFav){
-        fav_button.setText("Marked as favourite");
-        }else{
-        fav_button.setText("Mark as favourite");
+        if (isMovieFav) {
+            fav_button.setText("Marked as favourite");
+        } else {
+            fav_button.setText("Mark as favourite");
         }
         movie_trailers.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -133,11 +144,10 @@ public class MovieDetailFragment extends Fragment {
         return rootView;
     }
 
-
     private void loadContent() {
 
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(position).getPoster_path());
-        Picasso.with(getActivity())
+        Glide.with(getActivity())
                 .load(url)
                 .into(movie_detail_image);
         movie_detail_title.setText(ArrayMovieDetails.getArrayList().get(position).getTitle());
@@ -149,24 +159,11 @@ public class MovieDetailFragment extends Fragment {
 
     }
 
-
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    public static void updateReviewAdapter() {
-        movie_reviews.setLayoutManager(new LinearLayoutManager(movie_reviews.getContext()));
-        movie_reviews.setAdapter(new ReviewsAdapter());
-
-    }
-
-    public static void updateTrailerAdapter() {
-        movie_trailers.setLayoutManager(new LinearLayoutManager(movie_trailers.getContext()));
-        movie_trailers.setAdapter(new TrailersAdapter());
     }
 
    /* @Override

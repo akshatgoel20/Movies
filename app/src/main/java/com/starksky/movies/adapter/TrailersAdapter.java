@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.starksky.movies.R;
 import com.starksky.movies.model.ArrayMovieDetails;
-import com.starksky.movies.view.fragment.MovieDetailFragment;
 
 /**
  * Created by akshat on 21/08/16.

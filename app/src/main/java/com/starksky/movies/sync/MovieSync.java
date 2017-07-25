@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class MovieSync {
     Context mContext;
     ArrayList<MovieDetailsModel> arrayMovieDetailses = new ArrayList<>();
+
     public MovieSync(Context context) {
         this.mContext = context;
     }

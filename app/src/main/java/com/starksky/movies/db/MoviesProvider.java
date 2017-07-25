@@ -15,8 +15,8 @@ public class MoviesProvider extends ContentProvider {
 
 
     static final int MOVIES = 100;
-    private MoviesDbHelper mOpenHelper;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
+    private MoviesDbHelper mOpenHelper;
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);

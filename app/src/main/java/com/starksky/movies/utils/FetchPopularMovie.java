@@ -7,11 +7,12 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.squareup.picasso.Picasso;
 import com.starksky.movies.BuildConfig;
 import com.starksky.movies.common.AppUrl;
+import com.starksky.movies.iface.ResponseListener;
 import com.starksky.movies.model.ArrayMovieDetails;
 import com.starksky.movies.model.MovieDetailsModel;
 import com.starksky.movies.sync.MovieSync;
@@ -29,22 +30,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import com.starksky.movies.iface.ResponseListener;
-
 /**
  * Created by akshat on 23/07/16.
  */
 public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
 
     Context context;
-    ResponseListener responseListener ;
+    ResponseListener responseListener;
 
 
-
-    public FetchPopularMovie(ResponseListener responseListener){
-        this.responseListener=  responseListener ;
+    public FetchPopularMovie(ResponseListener responseListener) {
+        this.responseListener = responseListener;
     }
-
 
 
     @Override
@@ -63,9 +60,9 @@ public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
                 MOVIE_BASE_URL = AppUrl.BASE_URL_POPULAR;
             } else if (movieSharedPref.equals("hrate")) {
                 MOVIE_BASE_URL = AppUrl.BASE_URL_TOPRATED;
-            } else if(movieSharedPref.equals("fav")){
-               new MovieSync(context).setFavMovie();
-                return null ;
+            } else if (movieSharedPref.equals("fav")) {
+                new MovieSync(context).setFavMovie();
+                return null;
             }
 
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
@@ -124,14 +121,14 @@ public class FetchPopularMovie extends AsyncTask<Context, Void, Void> {
         super.onPostExecute(aVoid);
         CommonUtils.stopDialog();
         responseListener.update();
-    //    GridPosterFragment.updateGridView();
+        //    GridPosterFragment.updateGridView();
 
     }
 
     private void loadImages() {
         for (int i = 0; i < ArrayMovieDetails.getArrayList().size(); i++) {
             String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(i).getPoster_path());
-            Picasso.with(context)
+            Glide.with(context)
                     .load(url);
 
         }

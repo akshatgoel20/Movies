@@ -20,7 +20,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         // Add 'general' preferences, defined in the XML file
         // TODO: Add preferences from XML
         addPreferencesFromResource(R.xml.pref_general);
-        LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
+        LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
         Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.activity_settings, root, false);
         root.addView(bar, 0); // insert at top
         bar.setNavigationOnClickListener(new View.OnClickListener() {

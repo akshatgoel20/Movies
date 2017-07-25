@@ -1,7 +1,7 @@
 package com.starksky.movies.common;
 
 /**
- * Created by NTQK0716 on 2016-07-25.
+ * Created by akshat on 2016-07-25.
  */
 public class AppUrl {
     public static final String API_KEY_PARAM = "api_key";

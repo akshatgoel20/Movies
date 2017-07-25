@@ -31,8 +31,8 @@ import java.util.ArrayList;
 public class FetchMovieReviews extends AsyncTask<Void, Void, Void> {
     private static final String TAG = FetchMovieReviews.class.getSimpleName();
     String MOVIE_BASE_TRAILERS_URL = AppUrl.BASE_URL_MOVIE;
-    private Context context;
     String id;
+    private Context context;
 
     public FetchMovieReviews(Context context, int position) {
         this.context = context;
@@ -80,7 +80,7 @@ public class FetchMovieReviews extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    void updateFinish(){
+    void updateFinish() {
         MovieDetailFragment.updateReviewAdapter();
     }
 }

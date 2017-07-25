@@ -7,13 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.starksky.movies.R;
+import com.starksky.movies.iface.ResponseListener;
 import com.starksky.movies.utils.CommonUtils;
 import com.starksky.movies.utils.FetchMovieReviews;
 import com.starksky.movies.utils.FetchMovieTrailers;
 import com.starksky.movies.utils.FetchPopularMovie;
 import com.starksky.movies.view.fragment.GridPosterFragment;
-
-import com.starksky.movies.iface.ResponseListener;
 import com.starksky.movies.view.fragment.MovieDetailFragment;
 
 public class MainActivity extends AppCompatActivity implements ResponseListener {
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements ResponseListener 
         }
 
     }
-
 
 
     @Override

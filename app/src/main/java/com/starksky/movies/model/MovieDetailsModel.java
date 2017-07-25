@@ -25,7 +25,6 @@ public class MovieDetailsModel {
     private String movie_id = "id";
 
 
-
     public String getPoster_path() {
         return poster_path;
     }

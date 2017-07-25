@@ -1,15 +1,13 @@
 package com.starksky.movies.adapter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.starksky.movies.R;
 import com.starksky.movies.common.AppUrl;
 import com.starksky.movies.model.ArrayMovieDetails;
@@ -21,7 +19,6 @@ public class GridPosterAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
     Context mContext;
     ImageView imageView;
-
 
 
     public GridPosterAdapter(Context context) {
@@ -52,7 +49,7 @@ public class GridPosterAdapter extends BaseAdapter {
         imageView = (ImageView) cellview.findViewById(R.id.gridimage);
         //imageView.setImageResource(R.mipmap.ic_launcher);
         String url = AppUrl.BASE_URL_IMAGE.concat(ArrayMovieDetails.getArrayList().get(i).getPoster_path());
-        Picasso.with(mContext)
+        Glide.with(mContext)
                 .load(url)
                 .placeholder(R.drawable.image_placeholder)
                 .error(R.drawable.image_placeholder)

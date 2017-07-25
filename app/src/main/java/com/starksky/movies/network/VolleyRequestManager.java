@@ -19,8 +19,8 @@ import java.net.URL;
 public class VolleyRequestManager {
 
     protected static final String TAG = VolleyRequestManager.class.getSimpleName();
-    private static VolleyRequestManager singleInstance = new VolleyRequestManager();
     static Context mContext;
+    private static VolleyRequestManager singleInstance = new VolleyRequestManager();
 
     protected VolleyRequestManager() {
     }

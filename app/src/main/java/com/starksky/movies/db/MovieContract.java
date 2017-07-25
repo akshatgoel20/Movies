@@ -18,7 +18,6 @@ public class MovieContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
 
-
     public static final class MovieEntry implements BaseColumns {
 
 
@@ -35,12 +34,6 @@ public class MovieContract {
         public static final String COLUMN_MOVIE_OVERVIEW = "overview";
         public static final String COLUMN_MOVIE_VOTE_AVERAGE = "vote_average";
         public static final String COLUMN_MOVIE_RELEASE_DATE = "release_date";
-
-
-        public static Uri buildMovieUri(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
-        }
-
         public static final String[] MOVIE_COLUMNS = {
                 COLUMN_MOVIE_ID,
                 COLUMN_MOVIE_TITLE,
@@ -50,13 +43,16 @@ public class MovieContract {
                 COLUMN_MOVIE_RELEASE_DATE,
 
         };
-
         public static final int COL_MOVIE_ID = 0;
         public static final int COL_MOVIE_TITLE = 1;
         public static final int COL_MOVIE_POSTER_PATH = 2;
         public static final int COL_MOVIE_OVERVIEW = 3;
         public static final int COL_MOVIE_VOTE_AVERAGE = 4;
         public static final int COL_MOVIE_RELEASE_DATE = 5;
+
+        public static Uri buildMovieUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
 
     }
 

@@ -17,6 +17,10 @@ public class MyApplication extends Application {
 
     private RequestQueue mRequestQueue;
 
+    public static synchronized MyApplication getInstance() {
+        return mInstance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,9 +38,5 @@ public class MyApplication extends Application {
         }
 
         return mRequestQueue;
-    }
-
-    public static synchronized MyApplication getInstance() {
-        return mInstance;
     }
 }

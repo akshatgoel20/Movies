@@ -1,17 +1,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_grid_poster"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/movie_grid_poster"
     tools:context="com.starksky.movies.view.fragment.GridPosterFragment">
 
 
     <GridView
         android:id="@+id/postergrid"
         android:layout_width="match_parent"
-        android:numColumns="auto_fit"
         android:layout_height="match_parent"
-        android:layout_gravity="left|top">
+        android:layout_gravity="left|top"
+        android:numColumns="auto_fit">
 
     </GridView>
 

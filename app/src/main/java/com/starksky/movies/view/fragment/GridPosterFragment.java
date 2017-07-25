@@ -29,15 +29,15 @@ import com.starksky.movies.view.activity.SettingsActivity;
 public class GridPosterFragment extends Fragment implements ResponseListener {
 
     private static final String TAG = GridPosterFragment.class.getSimpleName();
-    static GridView gridView;
-    static GridPosterAdapter gridPosterAdapter;
-    private int mPosition = GridView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
     private static final String SELECTED_SORT = "sort";
-    private String sort = "def";
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
-    FragmentManager fragmentManager ;
-    FragmentTransaction fragmentTransaction ;
+    static GridView gridView;
+    static GridPosterAdapter gridPosterAdapter;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    private int mPosition = GridView.INVALID_POSITION;
+    private String sort = "def";
 
     public GridPosterFragment() {
         // Required empty public constructor
@@ -67,10 +67,10 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
                 // movieDetailPosition.setPosition(i);
                 Fragment fragment = new MovieDetailFragment();
                 fragment.setArguments(bundle);
-                 fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager = getActivity().getSupportFragmentManager();
                 new FetchMovieTrailers(getActivity(), i).execute();
                 new FetchMovieReviews(getActivity(), i).execute();
-                 fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction = fragmentManager.beginTransaction();
                 if (!CommonUtils.isTb()) {
                     fragmentTransaction.replace(R.id.container, fragment).addToBackStack(TAG);
                     //  fragmentTransaction.attach(fragment);
@@ -130,11 +130,10 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
                 CommonUtils.toast(getActivity(), "Please connect to internet");
                 return;
             }
-            if(!sort.equals("def")){
+            if (!sort.equals("def")) {
                 refreshDetailView();
             }
         }
-
 
 
     }
@@ -178,8 +177,6 @@ public class GridPosterFragment extends Fragment implements ResponseListener {
         new FetchPopularMovie(this).execute(getActivity());
 
     }
-
-
 
 
     @Override

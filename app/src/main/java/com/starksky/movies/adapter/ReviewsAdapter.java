@@ -8,28 +8,11 @@ import android.widget.TextView;
 
 import com.starksky.movies.R;
 import com.starksky.movies.model.ArrayMovieDetails;
-import com.starksky.movies.view.fragment.MovieDetailFragment;
 
 /**
  * Created by akshat on 19/08/16.
  */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
-
-
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        protected final TextView name;
-        protected final TextView content;
-
-
-        public ViewHolder(View view) {
-            super(view);
-            name = (TextView) view.findViewById(R.id.name_review_detail);
-            content = (TextView) view.findViewById(R.id.content_review_detail);
-
-        }
-    }
 
 
     @Override
@@ -48,6 +31,20 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     @Override
     public int getItemCount() {
         return ArrayMovieDetails.getReviewDetailsArrayList().size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        protected final TextView name;
+        protected final TextView content;
+
+
+        public ViewHolder(View view) {
+            super(view);
+            name = (TextView) view.findViewById(R.id.name_review_detail);
+            content = (TextView) view.findViewById(R.id.content_review_detail);
+
+        }
     }
 
 

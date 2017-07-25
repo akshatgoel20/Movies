@@ -26,13 +26,13 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by NTQK0716 on 2016-08-16.
+ * Created by akshat on 2016-08-16.
  */
 public class FetchMovieTrailers extends AsyncTask<Void, Void, Void> {
     private static final String TAG = FetchMovieTrailers.class.getSimpleName();
     String MOVIE_BASE_TRAILERS_URL = AppUrl.BASE_URL_MOVIE;
-    private Context context;
     String id;
+    private Context context;
 
     public FetchMovieTrailers(Context context, int position) {
         this.context = context;
@@ -82,8 +82,7 @@ public class FetchMovieTrailers extends AsyncTask<Void, Void, Void> {
     }
 
 
-
-    void updateFinish(){
+    void updateFinish() {
         MovieDetailFragment.updateTrailerAdapter();
     }
 }

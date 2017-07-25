@@ -12,6 +12,7 @@ import android.widget.Toast;
  */
 public class CommonUtils {
 
+    public static boolean isTb;
     static Dialog progress;
 
     public static boolean isTb() {
@@ -21,8 +22,6 @@ public class CommonUtils {
     public static void setIsTb(boolean isTb) {
         CommonUtils.isTb = isTb;
     }
-
-    public static boolean isTb ;
 
     public static void showDialog(Context context, String msg) {
         progress = new ProgressDialog(context);
@@ -47,7 +46,7 @@ public class CommonUtils {
         return isAvailable;
     }
 
-    public static void toast(Context context,String s){
-        Toast toast = Toast.makeText(context, s,Toast.LENGTH_SHORT);
+    public static void toast(Context context, String s) {
+        Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
     }
 }
